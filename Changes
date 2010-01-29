@@ -1,0 +1,13 @@
+
+0.93	2010-01-29
+		- Changing Class::C3 to MRO::Compat 
+
+0.92	2008-07-30
+		- no longer using $c->config to store state
+		- configuration for memory type checked (rss, virt, etc) 
+
+0.91	2008-05-21 
+		- Actually read the config correctly 
+
+0.90	2008-05-16 
+		- Initial release.
