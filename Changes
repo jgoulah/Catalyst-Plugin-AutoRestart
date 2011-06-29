@@ -1,4 +1,6 @@
-
+0.94    2011-06-29
+                - Add option to kill through HUP signal instead of exit.
+                
 0.93	2010-01-29
 		- Changing Class::C3 to MRO::Compat 
 

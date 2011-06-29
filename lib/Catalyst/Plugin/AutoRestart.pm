@@ -11,7 +11,7 @@ use Proc::ProcessTable;
 
 __PACKAGE__->mk_classaccessor(qw/_autorestart_state/);
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 
 =head1 NAME
 
@@ -27,6 +27,9 @@ use Catalyst qw/AutoRestart/;
 	check_each => '20',
 	max_bits => 576716800,
 	min_handled_requests => '150',
+        size_field => 'size', # or any other field supported by
+                              # Proc::ProcessTable::Process
+        restart => 'exit', # alternative is kill for a more graceful restart
  }
 
  <Plugin::AutoRestart>
@@ -34,6 +37,7 @@ use Catalyst qw/AutoRestart/;
     check_each   20
     max_bits  576716800
     min_handled_requests   150
+    restart exit
  </Plugin::AutoRestart>
 
 =head1 DESCRIPTION
@@ -97,9 +101,10 @@ sub setup {
 		max_bits => 524288000,
 		min_handled_requests => 500,
 		size_field => 'size',
+                restart => 'exit',
 		%$config
 	} );
-    
+
 	return $c->next::method(@_)
 }
 
@@ -127,14 +132,19 @@ sub handle_request {
 		$c->log->warn("Found size is $size");
 		
 		if(defined $size && $size > $state->{max_bits} ) {
-			# this actually wont output to log since it exits
+			# this wont output to log since it exits unless
+			# $config->{restart} is set to 'kill'
 			$c->log->warn("$size is bigger than: ".$state->{max_bits}. " exiting now...");
 			$c->log->_flush if $c->log->can("_flush");
-			exit(0);
+                        if ($state->{restart} eq 'exit') {
+                            exit(0);
+                        }
+                        elsif ($state->{restart} eq 'kill') {
+                            kill 'HUP', $$;
+                        }
 		}
 		$c->log->_flush if $c->log->can("_flush");
 	}
- 
 	return $ret;
 }
 
