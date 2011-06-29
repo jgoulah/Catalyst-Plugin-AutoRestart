@@ -27,6 +27,8 @@ use Catalyst qw/AutoRestart/;
 	check_each => '20',
 	max_bits => 576716800,
 	min_handled_requests => '150',
+        size_field => 'size', # or any other field supported by
+                              # Proc::ProcessTable::Process
  }
 
  <Plugin::AutoRestart>
@@ -99,7 +101,7 @@ sub setup {
 		size_field => 'size',
 		%$config
 	} );
-    
+
 	return $c->next::method(@_)
 }
 
@@ -134,7 +136,6 @@ sub handle_request {
 		}
 		$c->log->_flush if $c->log->can("_flush");
 	}
- 
 	return $ret;
 }
 
