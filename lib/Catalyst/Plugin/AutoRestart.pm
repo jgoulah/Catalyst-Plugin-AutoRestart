@@ -11,7 +11,7 @@ use Proc::ProcessTable;
 
 __PACKAGE__->mk_classdata(qw/_autorestart_state/);
 
-our $VERSION = '0.94';
+our $VERSION = '0.95';
 
 =head1 NAME
 
