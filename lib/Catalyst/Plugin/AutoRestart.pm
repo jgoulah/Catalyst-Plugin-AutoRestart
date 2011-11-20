@@ -4,12 +4,12 @@ use strict;
 use warnings;
 
 # The same accessor that Catalyst core uses
-use base qw/Class::Data::Accessor/;
+use base qw/Catalyst::ClassData/;
 use MRO::Compat;
 use Text::SimpleTable;
 use Proc::ProcessTable;
 
-__PACKAGE__->mk_classaccessor(qw/_autorestart_state/);
+__PACKAGE__->mk_classdata(qw/_autorestart_state/);
 
 our $VERSION = '0.94';
 
