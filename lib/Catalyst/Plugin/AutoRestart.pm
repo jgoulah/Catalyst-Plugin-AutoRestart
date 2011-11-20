@@ -125,11 +125,11 @@ sub handle_request {
 	my $check_each = $state->{check_each};
      
 	if( ($Catalyst::COUNT >= $state->{min_handled_requests}) && ($Catalyst::COUNT % $check_each) == 0 ) {
-		$c->log->warn('Checking Memory Size.');
+		$c->log->debug('Checking Memory Size.');
 
 		my $size = $c->_debug_process_table($c);
 		
-		$c->log->warn("Found size is $size");
+		$c->log->debug("Found size is $size");
 		
 		if(defined $size && $size > $state->{max_bits} ) {
 			# this wont output to log since it exits unless
@@ -166,7 +166,7 @@ sub _debug_process_table {
 		 
 		my $table = new Text::SimpleTable( [ 6, 'PID' ], [ 12, 'VIRT' ], [ 12, 'RES' ], [ 15, 'COMMAND' ] );
 		$table->row($p->pid, $p->size, $p->rss, $p->cmndline);
-		$c->log->warn("Process Info:\n" . $table->draw);
+		$c->log->debug("Process Info:\n" . $table->draw);
 		
 		my $fld = $state->{size_field};
 		return $p->$fld;
