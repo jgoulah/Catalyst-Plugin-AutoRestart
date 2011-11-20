@@ -10,6 +10,9 @@ SYNOPSIS
             check_each => '20',
             max_bits => 576716800,
             min_handled_requests => '150',
+            size_field => 'size', # or any other field supported by
+                                  # Proc::ProcessTable::Process
+            restart => 'exit', # alternative is kill for a more graceful restart
      }
 
      <Plugin::AutoRestart>
@@ -17,6 +20,7 @@ SYNOPSIS
         check_each   20
         max_bits  576716800
         min_handled_requests   150
+        restart exit
      </Plugin::AutoRestart>
 
 DESCRIPTION
