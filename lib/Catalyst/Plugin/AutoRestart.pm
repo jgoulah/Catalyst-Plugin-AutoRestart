@@ -1,17 +1,15 @@
 package Catalyst::Plugin::AutoRestart;
 
-use strict;
-use warnings;
-
 # The same accessor that Catalyst core uses
-use base qw/Catalyst::ClassData/;
+use Moose;
+with qw/Catalyst::ClassData/;
 use MRO::Compat;
 use Text::SimpleTable;
 use Proc::ProcessTable;
 
 __PACKAGE__->mk_classdata(qw/_autorestart_state/);
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 
 =head1 NAME
 

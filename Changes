@@ -1,3 +1,6 @@
+0.96    2011-11-27
+        - fix test failure
+
 0.95    2011-11-20
         - switch Class::Data::Accessor to Catalyst::ClassData
         - address rt #68997 "log levels too high" ticket
